@@ -112,6 +112,28 @@ const VeilFlow = {
         if (paperSizeSelect) {
             paperSizeSelect.addEventListener('change', (e) => this.handlePaperSizeChange(e.target.value));
         }
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebar = document.querySelector('.sidebar');
+
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', () => this.toggleMobileMenu());
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', () => this.closeMobileMenu());
+        }
+
+        // Close mobile menu when nav item is clicked
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    this.closeMobileMenu();
+                }
+            });
+        });
     },
 
     /**
@@ -791,6 +813,47 @@ const VeilFlow = {
         if (updatePreview) {
             LabelGenerator.generateSettingsPreview();
         }
+    },
+
+    /**
+     * Toggle Mobile Menu
+     */
+    toggleMobileMenu() {
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const menuIcon = document.querySelector('#mobileMenuToggle i');
+
+        if (sidebar && overlay) {
+            const isActive = sidebar.classList.toggle('active');
+
+            if (isActive) {
+                overlay.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+                if (menuIcon) menuIcon.className = 'fas fa-times';
+            } else {
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+                if (menuIcon) menuIcon.className = 'fas fa-bars';
+            }
+        }
+    },
+
+    /**
+     * Close Mobile Menu
+     */
+    closeMobileMenu() {
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const menuIcon = document.querySelector('#mobileMenuToggle i');
+
+        if (sidebar) {
+            sidebar.classList.remove('active');
+        }
+        if (overlay) {
+            overlay.style.display = 'none';
+        }
+        document.body.style.overflow = '';
+        if (menuIcon) menuIcon.className = 'fas fa-bars';
     }
 };
 

@@ -607,9 +607,9 @@ const VeilFlow = {
      */
     getFabricName(code) {
         const fabrics = {
-            'F': 'قماش عادي',
+            'F': 'قماش',
             'C': 'قطن',
-            'S': 'حرير',
+            'S': 'معدني',
             'P': 'بوليستر',
             'M': 'مخلوط'
         };

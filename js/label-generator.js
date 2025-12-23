@@ -26,10 +26,12 @@ const LabelGenerator = {
         try {
             JsBarcode(canvas, data, {
                 format: "CODE128",
-                width: 1,
-                height: 30,
+                width: 2,
+                height: 50,
                 displayValue: false,
-                margin: 0,
+                margin: 5,
+                marginTop: 5,
+                marginBottom: 5,
                 background: "#ffffff",
                 lineColor: "#000000"
             });

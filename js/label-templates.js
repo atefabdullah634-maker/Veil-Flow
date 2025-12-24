@@ -45,8 +45,8 @@ const LabelTemplates = {
                     ${product.name}
                 </div>
                 
-                <div style="flex: 1; display: flex; align-items: center; justify-content: center; margin: 0.1cm 0; min-height: 0.8cm;">
-                    <div id="${barcodeId}" style="width: 100%; display: flex; align-items: center; justify-content: center;"></div>
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; margin: 0.1cm 0; min-height: 0.8cm; overflow: hidden;">
+                    <div id="${barcodeId}" style="width: 100%; max-width: 100%; display: flex; align-items: center; justify-content: center;"></div>
                 </div>
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 8px; font-family: 'Inter', monospace; padding-top: 0.04cm; border-top: 1px solid #e2e8f0;">

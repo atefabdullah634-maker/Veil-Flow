@@ -21,17 +21,18 @@ const LabelGenerator = {
         container.innerHTML = '';
         const canvas = document.createElement('canvas');
         canvas.id = containerId + '_canvas';
+        // إضافة تنسيق لجعل الكانفس مرن داخل الحاوية
+        canvas.style.maxWidth = '100%';
+        canvas.style.height = 'auto';
         container.appendChild(canvas);
 
         try {
             JsBarcode(canvas, data, {
                 format: "CODE128",
-                width: 2,
-                height: 50,
+                width: 1.5, // تقليل العرض من 2 إلى 1.5 ليناسب الـ 5 سم
+                height: 40,  // تقليل الارتفاع قليلاً لترك مساحة للنصوص
                 displayValue: false,
-                margin: 5,
-                marginTop: 5,
-                marginBottom: 5,
+                margin: 0,   // إلغاء الهوامش الداخلية للباركود
                 background: "#ffffff",
                 lineColor: "#000000"
             });

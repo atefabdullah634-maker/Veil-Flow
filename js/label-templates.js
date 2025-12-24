@@ -32,7 +32,7 @@ const LabelTemplates = {
                 
                 <div style="
                     text-align: center;
-                    font-size: 9px;
+                    font-size: 11px;
                     font-weight: 700;
                     color: #1e293b;
                     line-height: 1.2;
@@ -49,9 +49,9 @@ const LabelTemplates = {
                     <div id="${barcodeId}" style="width: 100%; max-width: 100%; display: flex; align-items: center; justify-content: center;"></div>
                 </div>
                 
-                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 8px; font-family: 'Inter', monospace; padding-top: 0.04cm; border-top: 1px solid #e2e8f0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 9px; font-family: 'Inter', monospace; padding-top: 0.04cm; border-top: 1px solid #e2e8f0;">
                     <div style="font-weight: 700; color: #059669; white-space: nowrap; font-size: 11px;">${product.price} ر.س</div>
-                    <div style="font-weight: 600; color: #64748b;">${product.sku}</div>
+                    <div style="font-weight: 600; color: #64748b; font-size: 9px;">${product.sku}</div>
                 </div>
             </div>
         `;
@@ -85,7 +85,7 @@ const LabelTemplates = {
                     <div style="
                         flex: 1;
                         text-align: center;
-                        font-size: 8px;
+                        font-size: 10px;
                         font-weight: 700;
                         color: white;
                         line-height: 1.2;
@@ -103,7 +103,7 @@ const LabelTemplates = {
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.05cm; padding: 0.05cm; background: #f1f5f9; border-radius: 3px;">
                     <div style="font-size: 12px; font-weight: 800; color: #059669; font-family: 'Inter';">${product.price} ر.س</div>
-                    <div style="font-size: 7px; font-weight: 600; color: #475569; font-family: 'Inter';">${product.sku}</div>
+                    <div style="font-size: 8px; font-weight: 600; color: #475569; font-family: 'Inter';">${product.sku}</div>
                 </div>
             </div>
         `;
@@ -140,7 +140,7 @@ const LabelTemplates = {
                 
                 <div style="
                     text-align: center;
-                    font-size: 8px;
+                    font-size: 10px;
                     font-weight: 700;
                     color: #1a472a;
                     line-height: 1.1;
@@ -162,7 +162,7 @@ const LabelTemplates = {
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.02cm 0.03cm; background: #fef9e7; border-top: 1px dashed #c9a961;">
                     <div style="font-size: 10px; font-weight: 800; color: #1a472a; font-family: 'Inter';">${product.price} ر.س</div>
-                    <div style="font-size: 7px; font-weight: 600; color: #6b5d42; font-family: 'Inter';">${product.sku}</div>
+                    <div style="font-size: 8px; font-weight: 600; color: #6b5d42; font-family: 'Inter';">${product.sku}</div>
                 </div>
             </div>
         `;
@@ -196,7 +196,7 @@ const LabelTemplates = {
                 
                 <div style="
                     text-align: center;
-                    font-size: 10px;
+                    font-size: 12px;
                     font-weight: 600;
                     color: #0f172a;
                     line-height: 1.2;
@@ -214,7 +214,7 @@ const LabelTemplates = {
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.08cm;">
                     <div style="font-size: 13px; font-weight: 700; color: #059669; font-family: 'Inter';">${product.price} ر.س</div>
-                    <div style="font-size: 8px; font-weight: 500; color: #94a3b8; font-family: 'Inter'; letter-spacing: 0.5px;">${product.sku}</div>
+                    <div style="font-size: 9px; font-weight: 500; color: #94a3b8; font-family: 'Inter'; letter-spacing: 0.5px;">${product.sku}</div>
                 </div>
             </div>
         `;
@@ -246,7 +246,7 @@ const LabelTemplates = {
                     <img src="${settings.shopLogo}" style="max-width: 0.6cm; max-height: 0.6cm; object-fit: contain; filter: brightness(0) invert(1);">
                     ` : ''}
                     <div style="
-                        font-size: 8px;
+                        font-size: 10px;
                         font-weight: 700;
                         color: white;
                         line-height: 1.2;
@@ -266,7 +266,7 @@ const LabelTemplates = {
                 
                 <div style="background: #1e293b; padding: 0.05cm 0.08cm; display: flex; justify-content: space-between; align-items: center;">
                     <div style="font-size: 11px; font-weight: 700; color: #fbbf24; font-family: 'Inter';">${product.price} ر.س</div>
-                    <div style="font-size: 7px; font-weight: 600; color: #94a3b8; font-family: 'Inter';">${product.sku}</div>
+                    <div style="font-size: 8px; font-weight: 600; color: #94a3b8; font-family: 'Inter';">${product.sku}</div>
                 </div>
             </div>
         `;

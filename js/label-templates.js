@@ -50,8 +50,8 @@ const LabelTemplates = {
                 </div>
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 8px; font-family: 'Inter', monospace; padding-top: 0.04cm; border-top: 1px solid #e2e8f0;">
+                    <div style="font-weight: 700; color: #059669; white-space: nowrap; font-size: 11px;">${product.price} ر.س</div>
                     <div style="font-weight: 600; color: #64748b;">${product.sku}</div>
-                    <div style="font-weight: 700; color: #059669; white-space: nowrap;">${product.price} ر.س</div>
                 </div>
             </div>
         `;
@@ -102,8 +102,8 @@ const LabelTemplates = {
                 </div>
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.05cm; padding: 0.05cm; background: #f1f5f9; border-radius: 3px;">
+                    <div style="font-size: 12px; font-weight: 800; color: #059669; font-family: 'Inter';">${product.price} ر.س</div>
                     <div style="font-size: 7px; font-weight: 600; color: #475569; font-family: 'Inter';">${product.sku}</div>
-                    <div style="font-size: 10px; font-weight: 800; color: #059669; font-family: 'Inter';">${product.price} ر.س</div>
                 </div>
             </div>
         `;
@@ -161,8 +161,8 @@ const LabelTemplates = {
                 </div>
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.02cm 0.03cm; background: #fef9e7; border-top: 1px dashed #c9a961;">
+                    <div style="font-size: 10px; font-weight: 800; color: #1a472a; font-family: 'Inter';">${product.price} ر.س</div>
                     <div style="font-size: 7px; font-weight: 600; color: #6b5d42; font-family: 'Inter';">${product.sku}</div>
-                    <div style="font-size: 8px; font-weight: 800; color: #1a472a; font-family: 'Inter';">${product.price} ر.س</div>
                 </div>
             </div>
         `;
@@ -213,8 +213,8 @@ const LabelTemplates = {
                 </div>
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.08cm;">
+                    <div style="font-size: 13px; font-weight: 700; color: #059669; font-family: 'Inter';">${product.price} ر.س</div>
                     <div style="font-size: 8px; font-weight: 500; color: #94a3b8; font-family: 'Inter'; letter-spacing: 0.5px;">${product.sku}</div>
-                    <div style="font-size: 11px; font-weight: 700; color: #059669; font-family: 'Inter';">${product.price} ر.س</div>
                 </div>
             </div>
         `;
@@ -265,8 +265,8 @@ const LabelTemplates = {
                 </div>
                 
                 <div style="background: #1e293b; padding: 0.05cm 0.08cm; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="font-size: 11px; font-weight: 700; color: #fbbf24; font-family: 'Inter';">${product.price} ر.س</div>
                     <div style="font-size: 7px; font-weight: 600; color: #94a3b8; font-family: 'Inter';">${product.sku}</div>
-                    <div style="font-size: 8px; font-weight: 600; color: white; font-family: 'Inter';">ر.س</div>
                 </div>
             </div>
         `;

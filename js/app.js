@@ -528,6 +528,8 @@ const VeilFlow = {
         VeilStorage.updateSettings(updatedSettings);
         this.showNotification('تم حفظ الإعدادات بنجاح ✓', 'success');
         LabelGenerator.generateSettingsPreview();
+        // تحديث مقاس الطباعة فوراً
+        LabelGenerator.updatePrintPageSize();
     },
 
     /**

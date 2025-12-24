@@ -124,6 +124,8 @@ const LabelGenerator = {
             });
 
             setTimeout(() => {
+                // تحديث مقاس الصفحة للمتصفح قبل الطباعة
+                this.updatePrintPageSize();
                 window.print();
                 VeilStorage.incrementPrintCount(products.length);
             }, 500);
@@ -300,5 +302,32 @@ const LabelGenerator = {
                 skuPreview.textContent = 'سيتم التوليد تلقائياً';
             }
         }
+    },
+
+    /**
+     * تحديث مقاس الطباعة ديناميكياً
+     */
+    updatePrintPageSize() {
+        const settings = VeilStorage.getSettings();
+        const width = settings.labelWidth;
+        const height = settings.labelHeight;
+
+        // البحث عن ستايل قديم أو إنشاء واحد جديد
+        let styleTag = document.getElementById('dynamic-print-page-style');
+        if (!styleTag) {
+            styleTag = document.createElement('style');
+            styleTag.id = 'dynamic-print-page-style';
+            document.head.appendChild(styleTag);
+        }
+
+        // كتابة كود المقاس للمتصفح
+        styleTag.textContent = `
+            @media print {
+                @page {
+                    size: ${width}cm ${height}cm;
+                    margin: 0;
+                }
+            }
+        `;
     }
 };

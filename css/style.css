@@ -651,6 +651,18 @@ button:disabled {
 
 /* ===================== Print Styles ===================== */
 @media print {
+
+    /* إلغاء هوامش الصفحة الافتراضية من المتصفح */
+    @page {
+        margin: 0;
+        size: auto;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
     body * {
         visibility: hidden;
     }
@@ -660,17 +672,23 @@ button:disabled {
         visibility: visible;
     }
 
+    /* التأكد من أن حاوية الطباعة تأخذ العرض الكامل للملصق */
     .print-area {
         position: absolute;
         right: 0;
         top: 0;
         width: 100%;
+        margin: 0;
+        padding: 0;
     }
 
+    /* منع أي ترحيل للملصق */
     .print-label {
         width: 5cm;
         height: 2.5cm;
+        margin: 0 !important;
         page-break-inside: avoid;
+        page-break-after: always;
         display: flex;
         border: 1px solid #ddd;
     }

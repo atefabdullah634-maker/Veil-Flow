@@ -652,10 +652,10 @@ button:disabled {
 /* ===================== Print Styles ===================== */
 @media print {
 
-    /* تنسيق الصفحة */
+    /* تنسيق الصفحة للطابعة الحرارية */
     @page {
-        size: A4;
-        margin: 0.5cm;
+        size: 5cm 2.5cm;
+        margin: 0;
     }
 
     body {
@@ -672,7 +672,7 @@ button:disabled {
         visibility: visible;
     }
 
-    /* حاوية الطباعة - تعرض الملصقات في شبكة */
+    /* حاوية الطباعة - كل ملصق على ورقة منفصلة */
     .print-area {
         position: absolute;
         right: 0;
@@ -680,25 +680,23 @@ button:disabled {
         width: 100%;
         margin: 0;
         padding: 0;
-        display: grid !important;
-        grid-template-columns: repeat(auto-fill, 5cm);
-        gap: 0.3cm;
-        justify-content: center;
+        display: block !important;
     }
 
-    /* الملصق - بدون كسر صفحة */
+    /* كل ملصق على ورقة منفصلة */
     .print-label {
         width: 5cm !important;
         height: 2.5cm !important;
         margin: 0 !important;
         padding: 0 !important;
+        page-break-after: always;
         page-break-inside: avoid;
         display: flex !important;
-        border: 1px solid #ddd;
+        border: none !important;
         box-sizing: border-box;
     }
 
-    /* إزالة كسر الصفحة من آخر ملصق */
+    /* آخر ملصق بدون كسر صفحة */
     .print-label:last-child {
         page-break-after: auto;
     }

@@ -21,7 +21,8 @@ const LabelGenerator = {
         container.innerHTML = '';
         const canvas = document.createElement('canvas');
         canvas.id = containerId + '_canvas';
-        // إضافة تنسيق لجعل الكانفس مرن داخل الحاوية
+        
+        // تعديل لتنسيق الباركود وجعله مرناً داخل الحاوية [تحسين]
         canvas.style.maxWidth = '100%';
         canvas.style.height = 'auto';
         container.appendChild(canvas);
@@ -29,10 +30,10 @@ const LabelGenerator = {
         try {
             JsBarcode(canvas, data, {
                 format: "CODE128",
-                width: 1.5, // تقليل العرض من 2 إلى 1.5 ليناسب الـ 5 سم
-                height: 40,  // تقليل الارتفاع قليلاً لترك مساحة للنصوص
+                width: 1.5,      // تقليل العرض ليناسب الملصقات الصغيرة (5سم)
+                height: 40,       // ارتفاع مناسب لترك مساحة للنصوص
                 displayValue: false,
-                margin: 0,   // إلغاء الهوامش الداخلية للباركود
+                margin: 0,        // إلغاء الهوامش الداخلية للباركود لمنع القص
                 background: "#ffffff",
                 lineColor: "#000000"
             });
@@ -93,6 +94,9 @@ const LabelGenerator = {
         }, 200);
     },
 
+    /**
+     * توليد الملصقات للطباعة مع معالجة مشاكل الطابعات الحرارية [تعديل أساسي]
+     */
     generateBulkLabels(products) {
         const printArea = document.getElementById('printArea');
         if (!printArea) return;
@@ -100,19 +104,26 @@ const LabelGenerator = {
         const settings = VeilStorage.getSettings();
         printArea.innerHTML = '';
 
+        // إنشاء حاوية الطباعة - تم تغييرها لـ block لإصلاح تكرار الورق الأبيض [تحسين]
         const container = document.createElement('div');
         container.style.cssText = `
-            padding: ${settings.marginTop}mm ${settings.marginLeft}mm ${settings.marginBottom}mm ${settings.marginRight}mm;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, ${settings.labelWidth}cm);
-            gap: 0.5cm;
+            padding: 0;
+            margin: 0;
+            display: block; 
         `;
 
         products.forEach(product => {
             const labelData = this.createLabelHTML(product);
             const labelDiv = document.createElement('div');
             labelDiv.innerHTML = labelData.html;
-            container.appendChild(labelDiv.firstElementChild);
+            
+            // ضبط كل ملصق ليأخذ ورقة واحدة فقط في الطابعة الحرارية
+            const labelElement = labelDiv.firstElementChild;
+            labelElement.style.margin = '0';
+            labelElement.style.border = 'none';
+            labelElement.style.pageBreakAfter = 'always'; // إجبار الطابعة على إنهاء الصفحة بعد كل ملصق
+            
+            container.appendChild(labelElement);
         });
 
         printArea.appendChild(container);
@@ -124,7 +135,7 @@ const LabelGenerator = {
             });
 
             setTimeout(() => {
-                // تحديث مقاس الصفحة للمتصفح قبل الطباعة
+                // تحديث مقاس الصفحة برمجياً ليتعرف المتصفح على الملصق تلقائياً
                 this.updatePrintPageSize();
                 window.print();
                 VeilStorage.incrementPrintCount(products.length);
@@ -133,28 +144,23 @@ const LabelGenerator = {
     },
 
     downloadQRCode(product) {
-        // Create temporary container for full label
         const tempDiv = document.createElement('div');
         tempDiv.id = 'temp-label-download';
         tempDiv.style.cssText = 'position: fixed; left: -9999px; top: -9999px; background: white;';
         document.body.appendChild(tempDiv);
 
-        // Generate the full label
         const labelData = this.createLabelHTML(product);
         tempDiv.innerHTML = labelData.html;
 
-        // Generate barcode
         setTimeout(() => {
             this.generateBarcode(labelData.barcodeId, product.sku);
 
-            // Wait for barcode to render, then capture as image
             setTimeout(() => {
                 const labelElement = tempDiv.querySelector('.print-label');
 
-                // Use html2canvas if available, otherwise try canvas method
                 if (typeof html2canvas !== 'undefined') {
                     html2canvas(labelElement, {
-                        scale: 3, // High quality
+                        scale: 3, 
                         backgroundColor: '#ffffff',
                         logging: false
                     }).then(canvas => {
@@ -166,11 +172,9 @@ const LabelGenerator = {
                         document.body.removeChild(tempDiv);
                     }).catch(error => {
                         console.error('Error capturing label:', error);
-                        // Fallback to simple method
                         this.downloadLabelFallback(product, tempDiv);
                     });
                 } else {
-                    // Fallback method without html2canvas
                     this.downloadLabelFallback(product, tempDiv);
                 }
             }, 500);
@@ -178,46 +182,33 @@ const LabelGenerator = {
     },
 
     downloadLabelFallback(product, tempDiv) {
-        // Simple fallback - just download the barcode with text
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-
         canvas.width = 500;
         canvas.height = 250;
-
-        // White background
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Product name
         ctx.fillStyle = '#1e293b';
         ctx.font = 'bold 20px Arial';
         ctx.textAlign = 'center';
         ctx.fillText(product.name.substring(0, 30), 250, 40);
-
-        // Get barcode canvas
         const barcodeCanvas = tempDiv.querySelector('canvas');
         if (barcodeCanvas) {
             ctx.drawImage(barcodeCanvas, 50, 70, 400, 100);
         }
-
-        // SKU and Price
         ctx.fillStyle = '#64748b';
         ctx.font = '14px monospace';
         ctx.textAlign = 'left';
         ctx.fillText(product.sku, 50, 200);
-
         ctx.fillStyle = '#059669';
         ctx.font = 'bold 16px Arial';
         ctx.textAlign = 'right';
         ctx.fillText(product.price + ' ر.س', 450, 200);
-
         const url = canvas.toDataURL('image/png');
         const a = document.createElement('a');
         a.href = url;
         a.download = `Label_${product.sku}.png`;
         a.click();
-
         document.body.removeChild(tempDiv);
     },
 
@@ -267,52 +258,34 @@ const LabelGenerator = {
         const productPrice = document.querySelector('.label-preview .product-price');
         const skuText = document.querySelector('.label-preview .sku-text');
 
-        if (productName) {
-            productName.textContent = formData.name || 'اسم المنتج';
-        }
-
-        if (productPrice) {
-            productPrice.textContent = formData.price ? `${formData.price} ر.س` : '--- ر.س';
-        }
+        if (productName) productName.textContent = formData.name || 'اسم المنتج';
+        if (productPrice) productPrice.textContent = formData.price ? `${formData.price} ر.س` : '--- ر.س';
 
         if (formData.category && formData.fabric) {
             const sku = `${formData.category}${new Date().getFullYear().toString().slice(-2)}XXXXX-${formData.fabric}`;
-
-            if (skuText) {
-                skuText.textContent = sku;
-            }
-
+            if (skuText) skuText.textContent = sku;
             const skuPreview = document.getElementById('skuPreview');
-            if (skuPreview) {
-                skuPreview.textContent = sku.replace('XXXXX', '●●●●●');
-            }
-
+            if (skuPreview) skuPreview.textContent = sku.replace('XXXXX', '●●●●●');
             if (previewBarcode) {
                 const tempSku = sku.replace('XXXXX', '00000');
                 this.generateBarcode('previewBarcode', tempSku);
             }
         } else {
             if (skuText) skuText.textContent = '---';
-            if (previewBarcode) {
-                previewBarcode.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #94a3b8;"><i class="fas fa-barcode" style="font-size: 2.5rem;"></i></div>';
-            }
-
+            if (previewBarcode) previewBarcode.innerHTML = '<i class="fas fa-barcode" style="font-size: 2.5rem;"></i>';
             const skuPreview = document.getElementById('skuPreview');
-            if (skuPreview) {
-                skuPreview.textContent = 'سيتم التوليد تلقائياً';
-            }
+            if (skuPreview) skuPreview.textContent = 'سيتم التوليد تلقائياً';
         }
     },
 
     /**
-     * تحديث مقاس الطباعة ديناميكياً
+     * وظيفة تحديث مقاس الصفحة ديناميكياً لضمان اختيار المتصفح للمقاس الصحيح
      */
     updatePrintPageSize() {
         const settings = VeilStorage.getSettings();
-        const width = settings.labelWidth;
-        const height = settings.labelHeight;
+        const width = settings.labelWidth || 5;
+        const height = settings.labelHeight || 2.5;
 
-        // البحث عن ستايل قديم أو إنشاء واحد جديد
         let styleTag = document.getElementById('dynamic-print-page-style');
         if (!styleTag) {
             styleTag = document.createElement('style');
@@ -320,13 +293,14 @@ const LabelGenerator = {
             document.head.appendChild(styleTag);
         }
 
-        // كتابة كود المقاس للمتصفح
         styleTag.textContent = `
             @media print {
                 @page {
                     size: ${width}cm ${height}cm;
                     margin: 0;
                 }
+                body { margin: 0; padding: 0; }
+                #printArea { width: 100%; margin: 0; padding: 0; }
             }
         `;
     }
